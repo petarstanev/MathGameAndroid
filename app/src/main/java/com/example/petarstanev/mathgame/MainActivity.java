@@ -23,9 +23,9 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onSensorChanged(SensorEvent event) {
             if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-                x= event.values[0];
-                y= event.values[1];
-                z= event.values[2];
+                x = event.values[0];
+                y = event.values[1];
+                z = event.values[2];
             }
 
 
@@ -37,6 +37,27 @@ public class MainActivity extends AppCompatActivity {
 
             myTextView = (TextView) findViewById(R.id.textViewRight);
             myTextView.setText("z - " + Float.toString(z));
+
+            myTextView = (TextView) findViewById(R.id.textViewCenter);
+            if (Math.abs(x) > Math.abs(y)) {
+                if (x < 0) {
+                    myTextView.setText("You tilt the device right");
+                }
+                if (x > 0) {
+                    myTextView.setText("You tilt the device left");
+                }
+            } else {
+                if (y < 0) {
+                    myTextView.setText("You tilt the device up");
+                }
+                if (y > 0) {
+                    myTextView.setText("You tilt the device down");
+                }
+
+            }
+            if (x > (-2) && x < (2) && y > (-2) && y < (2)) {
+                myTextView.setText("Not tilt device");
+            }
             v.setX(x);
             v.setY(y);
             v.setZ(z);
@@ -55,15 +76,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        sensorManager.registerListener(listener,  accelerometer,
+        sensorManager.registerListener(listener, accelerometer,
                 SensorManager.SENSOR_DELAY_NORMAL);
-        v= new MyView(this);
+        v = new MyView(this);
     }
 }
 
 class MyView extends View {
-    private float x,y,z;
+    private float x, y, z;
     Paint p = new Paint();
+
     public MyView(Context context) {
         super(context);
     }
