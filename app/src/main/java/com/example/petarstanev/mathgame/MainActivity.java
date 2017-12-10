@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
         TextView textViewBottom;
         TextView textViewLeft;
         TextView textViewCenter;
+        Question question = new Question();
+
         @Override
         public void onSensorChanged(SensorEvent event) {
             if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
@@ -68,7 +70,8 @@ public class MainActivity extends AppCompatActivity {
 
             }
             if (x > (-2) && x < (2) && y > (-2) && y < (2)) {
-                textViewCenter.setText("Not tilt device");
+                clearColors();
+                textViewCenter.setText(question.toString());
             }
 
         }
