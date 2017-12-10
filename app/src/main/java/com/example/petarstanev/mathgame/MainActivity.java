@@ -13,39 +13,76 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
     float x, y, z;
-    MyView v;
+
 
     SensorManager sensorManager;
     Sensor accelerometer;
     SensorEventListener listener = new SensorEventListener() {
+        TextView textViewTop;
+        TextView textViewRight;
+        TextView textViewBottom;
+        TextView textViewLeft;
+        TextView textViewCenter;
         @Override
         public void onSensorChanged(SensorEvent event) {
             if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-                x= event.values[0];
-                y= event.values[1];
-                z= event.values[2];
+                x = event.values[0];
+                y = event.values[1];
+                z = event.values[2];
             }
 
+            textViewTop = (TextView) findViewById(R.id.textViewTop);
+            textViewRight = (TextView) findViewById(R.id.textViewRight);
+            textViewBottom = (TextView) findViewById(R.id.textViewBottom);
+            textViewLeft = (TextView) findViewById(R.id.textViewLeft);
+            textViewCenter = (TextView) findViewById(R.id.textViewCenter);
 
-            TextView myTextView = (TextView) findViewById(R.id.textViewLeft);
-            myTextView.setText("x - " + Float.toString(x));
 
-            myTextView = (TextView) findViewById(R.id.textViewTop);
-            myTextView.setText("y - " + Float.toString(y));
+            if (Math.abs(x) > Math.abs(y)) {
+                if (x < 0) {
+                    clearColors();
+                    textViewRight.setBackgroundColor(Color.YELLOW);
+                    textViewCenter.setText("You tilt the device right");
+                }
+                if (x > 0) {
+                    clearColors();
+                    textViewLeft.setBackgroundColor(Color.YELLOW);
+                    textViewCenter.setText("You tilt the device left");
+                }
+            } else {
+                if (y < 0) {
+                    clearColors();
+                    textViewTop.setBackgroundColor(Color.YELLOW);
+                    textViewCenter.setText("You tilt the device up");
+                }
+                if (y > 0) {
+                    clearColors();
+                    textViewBottom.setBackgroundColor(Color.YELLOW);
+                    textViewCenter.setText("You tilt the device down");
+                }
 
-            myTextView = (TextView) findViewById(R.id.textViewRight);
-            myTextView.setText("z - " + Float.toString(z));
-            v.setX(x);
-            v.setY(y);
-            v.setZ(z);
-            v.invalidate();
+            }
+            if (x > (-2) && x < (2) && y > (-2) && y < (2)) {
+                textViewCenter.setText("Not tilt device");
+            }
+
         }
 
         @Override
         public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
+        }
+
+        private void clearColors(){
+            textViewTop.setBackgroundColor(Color.TRANSPARENT);
+            textViewRight.setBackgroundColor(Color.TRANSPARENT);
+            textViewBottom.setBackgroundColor(Color.TRANSPARENT);
+            textViewLeft.setBackgroundColor(Color.TRANSPARENT);
         }
     };
 
@@ -55,31 +92,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        sensorManager.registerListener(listener,  accelerometer,
+        sensorManager.registerListener(listener, accelerometer,
                 SensorManager.SENSOR_DELAY_NORMAL);
-        v= new MyView(this);
-    }
-}
-
-class MyView extends View {
-    private float x,y,z;
-    Paint p = new Paint();
-    public MyView(Context context) {
-        super(context);
-    }
-
-    @Override
-    public void setX(float x) {
-        this.x = x;
-    }
-
-    @Override
-    public void setY(float y) {
-        this.y = y;
-    }
-
-    @Override
-    public void setZ(float z) {
-        this.z = z;
     }
 }
