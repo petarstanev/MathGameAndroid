@@ -1,5 +1,7 @@
 package com.example.petarstanev.mathgame;
 
+import android.widget.TextView;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
@@ -9,19 +11,25 @@ import java.util.Random;
  */
 
 public class Question {
-    private ArrayList<Answer> answers;
+   private ArrayList<Answer> answers;
     private int numberOne;
     private int numberTwo;
     private char symbol;
-    Random rand;
-
-
+    private Random rand;
 
     public Question() {
         answers = new ArrayList<>();
         rand = new Random();
         generateQuestion();
         generateAnswers();
+    }
+
+    public ArrayList<Answer> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(ArrayList<Answer> answers) {
+        this.answers = answers;
     }
 
     private void generateQuestion(){

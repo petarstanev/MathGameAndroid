@@ -11,6 +11,7 @@ import android.hardware.SensorManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -18,17 +19,28 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     float x, y, z;
-
-
     SensorManager sensorManager;
     Sensor accelerometer;
+    Question question = new Question();
+    TextView textViewTop;
+    TextView textViewRight;
+    TextView textViewBottom;
+    TextView textViewLeft;
+    TextView textViewCenter;
+    Button buttonNextQuestion;
+
+    private void printQuestion(){
+        clearColors();
+        textViewCenter.setText(question.toString());
+        textViewTop.setText(String.valueOf(question.getAnswers().get(0).getNumber()));
+        textViewRight.setText(String.valueOf(question.getAnswers().get(1).getNumber()));
+        textViewBottom.setText(String.valueOf(question.getAnswers().get(2).getNumber()));
+        textViewLeft.setText(String.valueOf(question.getAnswers().get(3).getNumber()));
+    }
+
     SensorEventListener listener = new SensorEventListener() {
-        TextView textViewTop;
-        TextView textViewRight;
-        TextView textViewBottom;
-        TextView textViewLeft;
-        TextView textViewCenter;
-        Question question = new Question();
+
+
 
         @Override
         public void onSensorChanged(SensorEvent event) {
@@ -38,39 +50,23 @@ public class MainActivity extends AppCompatActivity {
                 z = event.values[2];
             }
 
-            textViewTop = (TextView) findViewById(R.id.textViewTop);
-            textViewRight = (TextView) findViewById(R.id.textViewRight);
-            textViewBottom = (TextView) findViewById(R.id.textViewBottom);
-            textViewLeft = (TextView) findViewById(R.id.textViewLeft);
-            textViewCenter = (TextView) findViewById(R.id.textViewCenter);
-
 
             if (Math.abs(x) > Math.abs(y)) {
                 if (x < 0) {
-                    clearColors();
-                    textViewRight.setBackgroundColor(Color.YELLOW);
-                    textViewCenter.setText("You tilt the device right");
+                    validateAnswer(textViewRight,question.getAnswers().get(1));
                 }
                 if (x > 0) {
-                    clearColors();
-                    textViewLeft.setBackgroundColor(Color.YELLOW);
-                    textViewCenter.setText("You tilt the device left");
+                    validateAnswer(textViewLeft,question.getAnswers().get(3));
                 }
             } else {
                 if (y < 0) {
-                    clearColors();
-                    textViewTop.setBackgroundColor(Color.YELLOW);
-                    textViewCenter.setText("You tilt the device up");
+                    validateAnswer(textViewTop,question.getAnswers().get(0));
                 }
                 if (y > 0) {
-                    clearColors();
-                    textViewBottom.setBackgroundColor(Color.YELLOW);
-                    textViewCenter.setText("You tilt the device down");
+                    validateAnswer(textViewBottom,question.getAnswers().get(2));
                 }
-
             }
             if (x > (-2) && x < (2) && y > (-2) && y < (2)) {
-                clearColors();
                 textViewCenter.setText(question.toString());
             }
 
@@ -81,11 +77,12 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        private void clearColors(){
-            textViewTop.setBackgroundColor(Color.TRANSPARENT);
-            textViewRight.setBackgroundColor(Color.TRANSPARENT);
-            textViewBottom.setBackgroundColor(Color.TRANSPARENT);
-            textViewLeft.setBackgroundColor(Color.TRANSPARENT);
+        private void validateAnswer(TextView textView, Answer answer){
+            if (answer.iscorrect()) {
+                textView.setBackgroundColor(Color.GREEN);
+            }else{
+                textView.setBackgroundColor(Color.RED);
+            }
         }
     };
 
@@ -94,8 +91,35 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        setupTextValues();
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensorManager.registerListener(listener, accelerometer,
                 SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+
+    private void setupTextValues(){
+        textViewTop = (TextView) findViewById(R.id.textViewTop);
+        textViewRight = (TextView) findViewById(R.id.textViewRight);
+        textViewBottom = (TextView) findViewById(R.id.textViewBottom);
+        textViewLeft = (TextView) findViewById(R.id.textViewLeft);
+        textViewCenter = (TextView) findViewById(R.id.textViewCenter);
+        buttonNextQuestion = (Button) findViewById(R.id.btnNextQuestion);
+
+        buttonNextQuestion.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                question = new Question();
+                printQuestion();
+            }
+        });
+        printQuestion();
+    }
+
+    private void clearColors(){
+        textViewTop.setBackgroundColor(Color.TRANSPARENT);
+        textViewRight.setBackgroundColor(Color.TRANSPARENT);
+        textViewBottom.setBackgroundColor(Color.TRANSPARENT);
+        textViewLeft.setBackgroundColor(Color.TRANSPARENT);
     }
 }
