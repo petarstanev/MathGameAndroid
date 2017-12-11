@@ -16,12 +16,14 @@ public class Question {
     private int numberTwo;
     private char symbol;
     private Random rand;
+    private boolean answered;
 
     public Question() {
         answers = new ArrayList<>();
         rand = new Random();
         generateQuestion();
         generateAnswers();
+        answered = false;
     }
 
     public ArrayList<Answer> getAnswers() {
@@ -79,6 +81,13 @@ public class Question {
         Collections.shuffle(answers);
     }
 
+    public boolean isAnswered() {
+        return answered;
+    }
+
+    public void setAnswered(boolean answered) {
+        this.answered = answered;
+    }
 
     @Override
     public String toString() {

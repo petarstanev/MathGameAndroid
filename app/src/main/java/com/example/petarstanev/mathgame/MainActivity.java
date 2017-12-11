@@ -49,25 +49,31 @@ public class MainActivity extends AppCompatActivity {
                 y = event.values[1];
                 z = event.values[2];
             }
-
+            /*textViewTop.setText(Float.toString(x));
+            textViewLeft.setText(Float.toString(y));
+            textViewRight.setText(Float.toString(z));*/
 
             if (Math.abs(x) > Math.abs(y)) {
-                if (x < 0) {
+                if (x < -3) {
                     validateAnswer(textViewRight,question.getAnswers().get(1));
                 }
-                if (x > 0) {
+                if (x > 3) {
                     validateAnswer(textViewLeft,question.getAnswers().get(3));
                 }
             } else {
-                if (y < 0) {
+                if (y < -3) {
                     validateAnswer(textViewTop,question.getAnswers().get(0));
                 }
-                if (y > 0) {
+                if (y > 3) {
                     validateAnswer(textViewBottom,question.getAnswers().get(2));
                 }
             }
-            if (x > (-2) && x < (2) && y > (-2) && y < (2)) {
-                textViewCenter.setText(question.toString());
+            if (x > (-3) && x < (3) && y > (-3) && y < (3)) {
+                if ( question.isAnswered()) {
+                    question = new Question();
+                    clearColors();
+                    textViewCenter.setText(question.toString());
+                }
             }
 
         }
@@ -79,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
         private void validateAnswer(TextView textView, Answer answer){
             if (answer.iscorrect()) {
+                question.setAnswered(true);
                 textView.setBackgroundColor(Color.GREEN);
             }else{
                 textView.setBackgroundColor(Color.RED);
@@ -105,16 +112,15 @@ public class MainActivity extends AppCompatActivity {
         textViewLeft = (TextView) findViewById(R.id.textViewLeft);
         textViewCenter = (TextView) findViewById(R.id.textViewCenter);
         buttonNextQuestion = (Button) findViewById(R.id.btnNextQuestion);
-
-        buttonNextQuestion.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                question = new Question();
-                printQuestion();
-            }
-        });
         printQuestion();
     }
+
+    private void generateNewQuestion(){
+        question = new Question();
+        printQuestion();
+    }
+
+
 
     private void clearColors(){
         textViewTop.setBackgroundColor(Color.TRANSPARENT);
