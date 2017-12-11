@@ -53,21 +53,22 @@ public class MainActivity extends AppCompatActivity {
             textViewLeft.setText(Float.toString(y));
             textViewRight.setText(Float.toString(z));*/
 
-            if (Math.abs(x) > Math.abs(y)) {
-                if (x < -3) {
+            if (Math.abs(y) > Math.abs(x)) {
+                if (y > 3) {
                     validateAnswer(textViewRight,question.getAnswers().get(1));
                 }
-                if (x > 3) {
+                if (y < -3) {
                     validateAnswer(textViewLeft,question.getAnswers().get(3));
                 }
             } else {
-                if (y < -3) {
+                if (x < -3) {
                     validateAnswer(textViewTop,question.getAnswers().get(0));
                 }
-                if (y > 3) {
+                if (x > 3) {
                     validateAnswer(textViewBottom,question.getAnswers().get(2));
                 }
             }
+
             if (x > (-1) && x < (1) && y > (-1) && y < (1)) {
                 if ( question.isAnswered()) {
                     question = new Question();
@@ -83,12 +84,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         private void validateAnswer(TextView textView, Answer answer){
-            if (answer.iscorrect()) {
-                question.setAnswered(true);
-                textView.setBackgroundColor(Color.GREEN);
-            }else{
-                textView.setBackgroundColor(Color.RED);
-            }
+            if (!question.isAnswered())
+                if (answer.iscorrect()) {
+                    question.setAnswered(true);
+                    textView.setBackgroundColor(Color.GREEN);
+                }else{
+                    textView.setBackgroundColor(Color.RED);
+                }
         }
     };
 
@@ -97,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+
         setupTextValues();
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensorManager.registerListener(listener, accelerometer,
@@ -110,7 +113,6 @@ public class MainActivity extends AppCompatActivity {
         textViewBottom = (TextView) findViewById(R.id.textViewBottom);
         textViewLeft = (TextView) findViewById(R.id.textViewLeft);
         textViewCenter = (TextView) findViewById(R.id.textViewCenter);
-        buttonNextQuestion = (Button) findViewById(R.id.btnNextQuestion);
         printQuestion();
     }
 
