@@ -68,14 +68,13 @@ public class MainActivity extends AppCompatActivity {
                     validateAnswer(textViewBottom,question.getAnswers().get(2));
                 }
             }
-            if (x > (-3) && x < (3) && y > (-3) && y < (3)) {
+            if (x > (-1) && x < (1) && y > (-1) && y < (1)) {
                 if ( question.isAnswered()) {
                     question = new Question();
                     clearColors();
-                    textViewCenter.setText(question.toString());
+                    printQuestion();
                 }
             }
-
         }
 
         @Override
