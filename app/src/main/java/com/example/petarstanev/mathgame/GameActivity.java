@@ -1,23 +1,23 @@
 package com.example.petarstanev.mathgame;
 
-import android.content.Context;
-import android.graphics.Canvas;
+import android.annotation.SuppressLint;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class GameActivity extends AppCompatActivity {
+
     float x, y, z;
     SensorManager sensorManager;
     Sensor accelerometer;
@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
     TextView textViewBottom;
     TextView textViewLeft;
     TextView textViewQuestion;
-    Button buttonNextQuestion;
 
     private void printQuestion(){
         clearColors();
@@ -71,9 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
             if (x > (-1) && x < (1) && y > (-1) && y < (1)) {
                 if ( question.isAnswered()) {
-                    question = new Question();
-                    clearColors();
-                    printQuestion();
+                    generateNewQuestion();
                 }
             }
         }
@@ -94,19 +91,6 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-
-        setupTextValues();
-        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        sensorManager.registerListener(listener, accelerometer,
-                SensorManager.SENSOR_DELAY_NORMAL);
-    }
-
-
     private void setupTextValues(){
         textViewTop = (TextView) findViewById(R.id.textViewTop);
         textViewRight = (TextView) findViewById(R.id.textViewRight);
@@ -118,15 +102,27 @@ public class MainActivity extends AppCompatActivity {
 
     private void generateNewQuestion(){
         question = new Question();
+        clearColors();
         printQuestion();
     }
-
-
 
     private void clearColors(){
         textViewTop.setBackgroundColor(Color.TRANSPARENT);
         textViewRight.setBackgroundColor(Color.TRANSPARENT);
         textViewBottom.setBackgroundColor(Color.TRANSPARENT);
         textViewLeft.setBackgroundColor(Color.TRANSPARENT);
+    }
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_game);
+        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+
+        setupTextValues();
+        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        sensorManager.registerListener(listener, accelerometer,
+                SensorManager.SENSOR_DELAY_NORMAL);
     }
 }
