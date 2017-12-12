@@ -11,6 +11,9 @@ import java.util.Random;
  */
 
 public class Question {
+    public static final int WRONG_ANSWERS_COUNT = 3;
+    public static final int MAX_RESULT_NUMBER = 10;
+
     private ArrayList<Answer> answers;
     private int numberOne;
     private int numberTwo;
@@ -39,13 +42,13 @@ public class Question {
 
     private void generateQuestion(){
         symbol = '+';
-        numberOne = rand.nextInt(20);
-        numberTwo = rand.nextInt(20);
+        numberOne = rand.nextInt(MAX_RESULT_NUMBER);
+        numberTwo = rand.nextInt(MAX_RESULT_NUMBER);
     }
 
     private void generateAnswers(){
         int correctResult = generateCorrectAnswer();
-        generateWrongAnswer(correctResult);
+        generateWrongAnswers(correctResult);
         shuffleAnswer();
     }
 
@@ -73,11 +76,23 @@ public class Question {
         return result;
     }
 
-    private void generateWrongAnswer(int correctResult){
-        for (int i = 0; i < 3; i++) {
-            int result = rand.nextInt(correctResult*2);
+    private void generateWrongAnswers(int correctResult){
+       while (answers.size() < 4){
+            int result;
+            do {
+                result = rand.nextInt(correctResult*2);
+            }while(!checkIfAnswerIsUnique(result));
+
             answers.add(new Answer(result,false));
         }
+    }
+
+    private boolean checkIfAnswerIsUnique(int number){
+        for (Answer answer:answers) {
+            if (answer.getNumber()==number)
+                return false;
+        }
+        return true;
     }
 
     private void shuffleAnswer(){

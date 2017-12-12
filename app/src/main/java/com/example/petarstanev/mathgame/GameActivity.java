@@ -28,8 +28,9 @@ public class GameActivity extends AppCompatActivity {
     TextView textViewQuestion;
     TextView textViewLives;
     TextView textViewScore;
-    int lives;
-    int score;
+    TextView textViewGameOver;
+    Button buttonNewGame;
+    Button buttonMenu;
     Game game;
 
     SensorEventListener listener = new SensorEventListener() {
@@ -80,10 +81,32 @@ public class GameActivity extends AppCompatActivity {
                         textView.setBackgroundColor(Color.RED);
                     }
                     updateScore();
+                    if (game.isOver())
+                        gameOverScreen();
                 }
             }
         }
     };
+
+    private void gameOverScreen(){
+        textViewGameOver.setVisibility(View.VISIBLE);
+        buttonMenu.setVisibility(View.VISIBLE);
+        buttonNewGame.setVisibility(View.VISIBLE);
+        buttonNewGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setupGame();
+            }
+        });
+    }
+
+    private void setupGame(){
+        game =  new Game();
+        printQuestion();
+        textViewGameOver.setVisibility(View.GONE);
+        buttonMenu.setVisibility(View.GONE);
+        buttonNewGame.setVisibility(View.GONE);
+    }
 
     private void setupTextValues(){
         textViewTop = (TextView) findViewById(R.id.textViewTop);
@@ -93,10 +116,10 @@ public class GameActivity extends AppCompatActivity {
         textViewQuestion = (TextView) findViewById(R.id.textViewQuestion);
         textViewLives = (TextView) findViewById(R.id.textViewLives);
         textViewScore = (TextView) findViewById(R.id.textViewScore);
-        lives = 3;
-        score = 0;
-        game =  new Game();
-        printQuestion();
+        textViewGameOver = (TextView) findViewById(R.id.textViewGameOver);
+        buttonNewGame = (Button) findViewById(R.id.buttonNewGame);
+        buttonMenu = (Button) findViewById(R.id.buttonMenu);
+        setupGame();
     }
 
     private void printQuestion(){

@@ -6,13 +6,17 @@ public class Game {
     private int lives;
     private int score;
     private Question question;
-    private boolean gameOver;
+    private boolean over;
 
     public Game() {
         lives = 3;
         score = 0;
         question = new Question();
-        gameOver = false;
+        over = false;
+    }
+
+    public boolean isOver() {
+        return over;
     }
 
     public Question getQuestion() {
@@ -40,7 +44,7 @@ public class Game {
                 lives--;
 
             if (lives == 0 )
-                gameOver = true;
+                over = true;
             question.increaseErrorNumber();
             return false;
         }
