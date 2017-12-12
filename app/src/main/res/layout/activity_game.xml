@@ -26,6 +26,7 @@
             android:layout_marginRight="8dp"
             android:layout_marginTop="8dp"
             android:text="Question ?"
+            android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -36,30 +37,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:layout_marginTop="8dp"
             android:text="TextView"
+            android:textSize="24sp"
             app:layout_constraintBottom_toTopOf="@+id/textViewQuestion"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.205"
-            android:layout_marginRight="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginLeft="8dp"
-            app:layout_constraintLeft_toLeftOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.205" />
 
         <TextView
             android:id="@+id/textViewBottom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:layout_marginTop="8dp"
             android:text="TextView"
+            android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewQuestion"
-            app:layout_constraintVertical_bias="0.806"
-            android:layout_marginRight="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginLeft="8dp"
-            app:layout_constraintLeft_toLeftOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/textViewQuestion"
+            app:layout_constraintVertical_bias="0.806" />
 
         <TextView
             android:id="@+id/textViewLeft"
@@ -70,6 +73,7 @@
             android:layout_marginRight="8dp"
             android:layout_marginTop="8dp"
             android:text="TextView"
+            android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.2"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -85,12 +89,45 @@
             android:layout_marginRight="8dp"
             android:layout_marginTop="8dp"
             android:text="TextView"
+            android:textAlignment="viewStart"
+            android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.8"
             app:layout_constraintLeft_toRightOf="@+id/textViewQuestion"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.501" />
+
+        <TextView
+            android:id="@+id/textViewScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="35dp"
+            android:text="Score: XX"
+            android:textSize="18sp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/textViewTop"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintHorizontal_bias="1.0" />
+
+        <TextView
+            android:id="@+id/textViewLives"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lives: XX"
+            android:textSize="18sp"
+            android:layout_marginLeft="16dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="8dp"
+            app:layout_constraintRight_toLeftOf="@+id/textViewTop"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/textViewLeft"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintVertical_bias="0.192" />
 
     </android.support.constraint.ConstraintLayout>
 

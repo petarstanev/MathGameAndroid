@@ -21,26 +21,18 @@ public class GameActivity extends AppCompatActivity {
     float x, y, z;
     SensorManager sensorManager;
     Sensor accelerometer;
-    Question question = new Question();
     TextView textViewTop;
     TextView textViewRight;
     TextView textViewBottom;
     TextView textViewLeft;
     TextView textViewQuestion;
-
-    private void printQuestion(){
-        clearColors();
-        textViewQuestion.setText(question.toString());
-        textViewTop.setText(String.valueOf(question.getAnswers().get(0).getNumber()));
-        textViewRight.setText(String.valueOf(question.getAnswers().get(1).getNumber()));
-        textViewBottom.setText(String.valueOf(question.getAnswers().get(2).getNumber()));
-        textViewLeft.setText(String.valueOf(question.getAnswers().get(3).getNumber()));
-    }
+    TextView textViewLives;
+    TextView textViewScore;
+    int lives;
+    int score;
+    Game game;
 
     SensorEventListener listener = new SensorEventListener() {
-
-
-
         @Override
         public void onSensorChanged(SensorEvent event) {
             if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
@@ -54,24 +46,23 @@ public class GameActivity extends AppCompatActivity {
 
             if (Math.abs(y) > Math.abs(x)) {
                 if (y > 3) {
-                    validateAnswer(textViewRight,question.getAnswers().get(1));
+                    validateAnswer(textViewRight,game.getQuestion().getAnswers().get(1));
                 }
                 if (y < -3) {
-                    validateAnswer(textViewLeft,question.getAnswers().get(3));
+                    validateAnswer(textViewLeft,game.getQuestion().getAnswers().get(3));
                 }
             } else {
                 if (x < -3) {
-                    validateAnswer(textViewTop,question.getAnswers().get(0));
+                    validateAnswer(textViewTop,game.getQuestion().getAnswers().get(0));
                 }
                 if (x > 3) {
-                    validateAnswer(textViewBottom,question.getAnswers().get(2));
+                    validateAnswer(textViewBottom,game.getQuestion().getAnswers().get(2));
                 }
             }
 
             if (x > (-1) && x < (1) && y > (-1) && y < (1)) {
-                if ( question.isAnswered()) {
-                    generateNewQuestion();
-                }
+                if(game.GenerateQuestion())
+                    printQuestion();
             }
         }
 
@@ -81,13 +72,16 @@ public class GameActivity extends AppCompatActivity {
         }
 
         private void validateAnswer(TextView textView, Answer answer){
-            if (!question.isAnswered())
-                if (answer.iscorrect()) {
-                    question.setAnswered(true);
-                    textView.setBackgroundColor(Color.GREEN);
-                }else{
-                    textView.setBackgroundColor(Color.RED);
+            if (!game.getQuestion().isAnswered()){
+                if (!answer.isSelected()){
+                    if (game.submitAnswer(answer)){
+                        textView.setBackgroundColor(Color.GREEN);
+                    }else{
+                        textView.setBackgroundColor(Color.RED);
+                    }
+                    updateScore();
                 }
+            }
         }
     };
 
@@ -97,13 +91,21 @@ public class GameActivity extends AppCompatActivity {
         textViewBottom = (TextView) findViewById(R.id.textViewBottom);
         textViewLeft = (TextView) findViewById(R.id.textViewLeft);
         textViewQuestion = (TextView) findViewById(R.id.textViewQuestion);
+        textViewLives = (TextView) findViewById(R.id.textViewLives);
+        textViewScore = (TextView) findViewById(R.id.textViewScore);
+        lives = 3;
+        score = 0;
+        game =  new Game();
         printQuestion();
     }
 
-    private void generateNewQuestion(){
-        question = new Question();
+    private void printQuestion(){
         clearColors();
-        printQuestion();
+        textViewQuestion.setText(game.getQuestion().toString());
+        textViewTop.setText(String.valueOf(game.getQuestion().getAnswers().get(0).getNumber()));
+        textViewRight.setText(String.valueOf(game.getQuestion().getAnswers().get(1).getNumber()));
+        textViewBottom.setText(String.valueOf(game.getQuestion().getAnswers().get(2).getNumber()));
+        textViewLeft.setText(String.valueOf(game.getQuestion().getAnswers().get(3).getNumber()));
     }
 
     private void clearColors(){
@@ -111,6 +113,11 @@ public class GameActivity extends AppCompatActivity {
         textViewRight.setBackgroundColor(Color.TRANSPARENT);
         textViewBottom.setBackgroundColor(Color.TRANSPARENT);
         textViewLeft.setBackgroundColor(Color.TRANSPARENT);
+    }
+
+    private void updateScore(){
+        textViewScore.setText("Score: " + game.getScore());
+        textViewLives.setText("Lives: " + game.getLives());
     }
 
 

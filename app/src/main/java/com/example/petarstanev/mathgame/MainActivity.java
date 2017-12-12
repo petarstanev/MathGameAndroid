@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
         private void validateAnswer(TextView textView, Answer answer){
             if (!question.isAnswered())
-                if (answer.iscorrect()) {
+                if (answer.isCorrect()) {
                     question.setAnswered(true);
                     textView.setBackgroundColor(Color.GREEN);
                 }else{

@@ -11,12 +11,13 @@ import java.util.Random;
  */
 
 public class Question {
-   private ArrayList<Answer> answers;
+    private ArrayList<Answer> answers;
     private int numberOne;
     private int numberTwo;
     private char symbol;
     private Random rand;
     private boolean answered;
+    private int errorNumber;
 
     public Question() {
         answers = new ArrayList<>();
@@ -24,7 +25,9 @@ public class Question {
         generateQuestion();
         generateAnswers();
         answered = false;
+        errorNumber = 0;
     }
+
 
     public ArrayList<Answer> getAnswers() {
         return answers;
@@ -87,6 +90,14 @@ public class Question {
 
     public void setAnswered(boolean answered) {
         this.answered = answered;
+    }
+
+    public int getErrorNumber() {
+        return errorNumber;
+    }
+
+    public void increaseErrorNumber() {
+        errorNumber++;
     }
 
     @Override
