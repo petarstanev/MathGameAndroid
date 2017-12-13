@@ -35,6 +35,7 @@ public class GameActivity extends AppCompatActivity {
     Button buttonNewGame;
     Button buttonMenu;
     Game game;
+    TactileFeedback tactileFeedback;
 
     SensorEventListener listener = new SensorEventListener() {
         @Override
@@ -80,10 +81,12 @@ public class GameActivity extends AppCompatActivity {
                 if (!answer.isSelected()){
                     if (game.submitAnswer(answer)){
                         textView.setBackgroundColor(Color.GREEN);
+                        tactileFeedback.correctAnswerFeedback();
                     }else{
                         textView.setBackgroundColor(Color.RED);
-
+                        tactileFeedback.wrongAnswerFeedback();
                     }
+
                     updateScore();
                     if (game.isOver())
                         gameOverScreen();
@@ -115,6 +118,7 @@ public class GameActivity extends AppCompatActivity {
 
     private void setupGame(){
         game =  new Game();
+        tactileFeedback = new TactileFeedback(this);
         printQuestion();
         textViewGameOver.setVisibility(View.GONE);
         buttonMenu.setVisibility(View.GONE);
