@@ -1,6 +1,7 @@
 package com.example.petarstanev.mathgame;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -96,6 +97,13 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 setupGame();
+            }
+        });
+        buttonMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(),MenuActivity.class);
+                startActivity(i);
             }
         });
     }
