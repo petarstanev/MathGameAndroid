@@ -9,7 +9,7 @@ public class Game {
     private boolean over;
 
     public Game() {
-        lives = 3;
+        lives = 1;
         score = 0;
         question = new Question();
         over = false;
