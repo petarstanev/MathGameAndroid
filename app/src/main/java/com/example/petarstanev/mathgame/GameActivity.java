@@ -7,6 +7,8 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -80,6 +82,7 @@ public class GameActivity extends AppCompatActivity {
                         textView.setBackgroundColor(Color.GREEN);
                     }else{
                         textView.setBackgroundColor(Color.RED);
+
                     }
                     updateScore();
                     if (game.isOver())

@@ -33,6 +33,7 @@ public class Game {
     }
 
     public boolean submitAnswer(Answer answer){
+        answer.setSelected(true);
         if (answer.isCorrect()) {
             question.setAnswered(true);
             if (question.getErrorNumber() == 0) {
