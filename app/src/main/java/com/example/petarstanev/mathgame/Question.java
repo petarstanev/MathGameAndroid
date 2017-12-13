@@ -21,6 +21,7 @@ public class Question {
     private Random rand;
     private boolean answered;
     private int errorNumber;
+    private int correctResult;
 
     public Question() {
         answers = new ArrayList<>();
@@ -47,8 +48,8 @@ public class Question {
     }
 
     private void generateAnswers(){
-        int correctResult = generateCorrectAnswer();
-        generateWrongAnswers(correctResult);
+        correctResult = generateCorrectAnswer();
+        generateWrongAnswers();
         shuffleAnswer();
     }
 
@@ -76,7 +77,7 @@ public class Question {
         return result;
     }
 
-    private void generateWrongAnswers(int correctResult){
+    private void generateWrongAnswers(){
        while (answers.size() < 4){
             int result;
             do {
@@ -115,8 +116,11 @@ public class Question {
         errorNumber++;
     }
 
-    @Override
-    public String toString() {
-        return numberOne + " "+ symbol + " " + numberTwo + "=";
+
+    public String printQuestion(boolean includeAnswer){
+        if (includeAnswer)
+            return numberOne + " "+ symbol + " " + numberTwo + " = " + correctResult;
+
+        return numberOne + " "+ symbol + " " + numberTwo + " = ";
     }
 }

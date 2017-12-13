@@ -24,7 +24,7 @@ public class Game {
     }
 
     public boolean GenerateQuestion(){
-        if (question.isAnswered()) {
+        if (question.isAnswered() && !over) {
             question = new Question();
             return true;
         }else{

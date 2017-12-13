@@ -93,6 +93,8 @@ public class GameActivity extends AppCompatActivity {
     };
 
     private void gameOverScreen(){
+        textViewQuestion.setText(game.getQuestion().printQuestion(true));
+        game.getQuestion().setAnswered(true);
         textViewGameOver.setVisibility(View.VISIBLE);
         buttonMenu.setVisibility(View.VISIBLE);
         buttonNewGame.setVisibility(View.VISIBLE);
@@ -135,7 +137,7 @@ public class GameActivity extends AppCompatActivity {
 
     private void printQuestion(){
         clearColors();
-        textViewQuestion.setText(game.getQuestion().toString());
+        textViewQuestion.setText(game.getQuestion().printQuestion(false));
         textViewTop.setText(String.valueOf(game.getQuestion().getAnswers().get(0).getNumber()));
         textViewRight.setText(String.valueOf(game.getQuestion().getAnswers().get(1).getNumber()));
         textViewBottom.setText(String.valueOf(game.getQuestion().getAnswers().get(2).getNumber()));
