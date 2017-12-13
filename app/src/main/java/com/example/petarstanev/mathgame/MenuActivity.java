@@ -27,10 +27,15 @@ public class MenuActivity extends AppCompatActivity {
         buttonOptions = (Button) findViewById(R.id.buttonOptions);
         buttonHighScore = (Button) findViewById(R.id.buttonHighScore);
 
-        buttonNewGame.setOnClickListener(new View.OnClickListener() {
+        addActivityToButton(buttonNewGame,new Intent(getApplicationContext(),GameActivity.class));
+        addActivityToButton(buttonOptions,new Intent(getApplicationContext(),OptionsActivity.class));
+        //addActivityToButton(buttonHighScore,new Intent(getApplicationContext(),GameActivity.class));
+    }
+
+    private void addActivityToButton(Button button, final Intent i){
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(),GameActivity.class);
                 startActivity(i);
             }
         });
