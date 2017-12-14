@@ -7,12 +7,13 @@ public class Game {
     private int score;
     private Question question;
     private boolean over;
-
+    private QuestionFactory questionFactory;
 
     public Game() {
-        lives = 1;
+        lives = 2;
         score = 0;
-        question = new Question();
+        questionFactory = new QuestionFactory();
+        question = questionFactory.generateQuestion(getDifficulty());
         over = false;
     }
 
@@ -26,11 +27,21 @@ public class Game {
 
     public boolean GenerateQuestion(){
         if (question.isAnswered() && !over) {
-            question = new Question();
+            question = questionFactory.generateQuestion(getDifficulty());
             return true;
         }else{
             return false;
         }
+    }
+
+    public int getDifficulty(){
+        if (score <3)
+            return 0;
+
+        if (score <8)
+            return 1;
+
+        return 2;
     }
 
     public boolean submitAnswer(Answer answer){

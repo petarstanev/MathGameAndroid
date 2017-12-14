@@ -5,6 +5,6 @@ package com.example.petarstanev.mathgame;
  */
 
 public interface FactoryInterface {
-    public Question createQuestion(int difficulty);
+    public Question generateQuestion(int difficulty);
 }
 
