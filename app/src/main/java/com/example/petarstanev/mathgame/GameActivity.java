@@ -16,6 +16,7 @@ import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -34,9 +35,12 @@ public class GameActivity extends AppCompatActivity {
     TextView textViewLives;
     TextView textViewScore;
     TextView textViewGameOver;
+    EditText editTextName;
     Button buttonNewGame;
     Button buttonMenu;
+    Button buttonHighScore;
     Game game;
+    HighScoreTable highScoreTable;
     TactileFeedback tactileFeedback;
 
     SensorEventListener listener = new SensorEventListener() {
@@ -117,13 +121,29 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
+        buttonHighScore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Score score = new Score(game.getScore(),editTextName.getText().toString());
+                highScoreTable.addScore(score);
+                buttonHighScore.setEnabled(false);
+                editTextName.setEnabled(false);
+                buttonHighScore.setText("Score was added");
+            }
+        });
 
-        ArrayList<Score> scores= new ArrayList<Score>();
-        scores.add(new Score(10,"Petar"));
-        scores.add(new Score(5,"Test"));
+        highScoreTable.retrieveScores();
 
+        Score testScore = new Score();
+        testScore.setPoints(game.getScore());
 
+        if(highScoreTable.checkHighScore(testScore)){
+            buttonHighScore.setVisibility(View.VISIBLE);
+            editTextName.setVisibility(View.VISIBLE);
+        }
     }
+
+
 
     private void setupGame(){
         game =  new Game();
@@ -132,6 +152,11 @@ public class GameActivity extends AppCompatActivity {
         textViewGameOver.setVisibility(View.GONE);
         buttonMenu.setVisibility(View.GONE);
         buttonNewGame.setVisibility(View.GONE);
+        buttonHighScore.setVisibility(View.GONE);
+        editTextName.setVisibility(View.GONE);
+        editTextName.setEnabled(true);
+        buttonHighScore.setEnabled(true);
+        buttonHighScore.setText("Add highscore");
     }
 
     private void setupTextValues(){
@@ -143,9 +168,12 @@ public class GameActivity extends AppCompatActivity {
         textViewLives = (TextView) findViewById(R.id.textViewLives);
         textViewScore = (TextView) findViewById(R.id.textViewScore);
         textViewGameOver = (TextView) findViewById(R.id.textViewGameOver);
+        editTextName = (EditText)  findViewById(R.id.editTextName);
         buttonNewGame = (Button) findViewById(R.id.buttonNewGame);
         buttonMenu = (Button) findViewById(R.id.buttonMenu);
+        buttonHighScore = (Button) findViewById(R.id.buttonHighScore);
         setupGame();
+
     }
 
     private void printQuestion(){
@@ -175,7 +203,7 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-
+        highScoreTable = new HighScoreTable(this);
         setupTextValues();
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensorManager.registerListener(listener, accelerometer,

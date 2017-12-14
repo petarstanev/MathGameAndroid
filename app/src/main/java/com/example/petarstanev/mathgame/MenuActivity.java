@@ -29,7 +29,7 @@ public class MenuActivity extends AppCompatActivity {
 
         addActivityToButton(buttonNewGame,new Intent(getApplicationContext(),GameActivity.class));
         addActivityToButton(buttonOptions,new Intent(getApplicationContext(),OptionsActivity.class));
-        //addActivityToButton(buttonHighScore,new Intent(getApplicationContext(),GameActivity.class));
+        addActivityToButton(buttonHighScore,new Intent(getApplicationContext(),HighScoreActivity.class));
     }
 
     private void addActivityToButton(Button button, final Intent i){

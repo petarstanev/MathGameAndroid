@@ -2,51 +2,63 @@ package com.example.petarstanev.mathgame;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class HighScoreTable {
-    private ArrayList<Score> scores;
+    private List<Score> scores;
     private Context context;
-    private SharedPreferences highscore;
-    private SharedPreferences.Editor editor;
 
-    public HighScoreTable() {
 
+
+
+    public HighScoreTable(Context context) {
         scores = new ArrayList<Score>();
-        highscore = context.getSharedPreferences("highScore", 0);
-        editor = highscore.edit();
+        retrieveScores();
+        this.context = context;
     }
 
+    public void saveScores(){
+        try {
+            InternalStorage.writeObject(context, "highScore", scores);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-
-
-    public void uploadScores(){
+    public boolean checkHighScore(Score testScore){
         Collections.sort(scores);
 
-        for (int i = 0; i < 3; i++) {
-            if (scores.size()>i){
-                Score score = scores.get(i);
-                editor.putString("player_name"+i, score.getName());
-                editor.putInt("player_points"+i, score.getPoints());
-            }
-        }
-        editor.apply();
+        if (scores.size() <= 3)
+            return true;
+
+        if (scores.get(2).getPoints() < testScore.getPoints())
+            return true;
+
+        return false;
     }
 
-    public String getScoreAsString(int placeNumber){
-        String name,points;
-        if (highscore.contains("player_name"+placeNumber)){
-            name = highscore.getString("player_name"+placeNumber,"");
-            points = highscore.getString("player_points"+placeNumber,"");
-            return name + " - "  + points;
+    public void addScore(Score testScore){
+        scores.add(testScore);
+        Collections.sort(scores);
+        try {
+            InternalStorage.writeObject(context,"highscores", scores);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-        return  "";
     }
 
-    
+    public List<Score> retrieveScores(){
+        try {
+            scores = (List<Score>) InternalStorage.readObject(context, "highscores");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return scores;
+    }
 }
 

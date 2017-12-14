@@ -8,6 +8,7 @@ public class Game {
     private Question question;
     private boolean over;
 
+
     public Game() {
         lives = 1;
         score = 0;

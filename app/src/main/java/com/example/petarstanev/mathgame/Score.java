@@ -2,9 +2,14 @@ package com.example.petarstanev.mathgame;
 
 import android.support.annotation.NonNull;
 
-public class Score implements Comparable {
+import java.io.Serializable;
+
+public class Score implements Comparable, Serializable {
     private int points;
     private String name;
+
+    public Score() {
+    }
 
     public Score(int points, String name) {
         this.points = points;
