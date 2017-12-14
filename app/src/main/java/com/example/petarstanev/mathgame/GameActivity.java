@@ -18,6 +18,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 
 public class GameActivity extends AppCompatActivity {
 
@@ -114,6 +116,13 @@ public class GameActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+
+        ArrayList<Score> scores= new ArrayList<Score>();
+        scores.add(new Score(10,"Petar"));
+        scores.add(new Score(5,"Test"));
+
+
     }
 
     private void setupGame(){

@@ -38,12 +38,13 @@ public class TactileFeedback {
         if (checkOption("sound")) {
             mediaPlayer = MediaPlayer.create(context, soundId);
             mediaPlayer.start();
-
+            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    mediaPlayer.stop();
+                    mediaPlayer.release();
+                }
+            });
         }
-    }
-
-    private void stopMedia(){
-        mediaPlayer.stop();
-        mediaPlayer.release();
     }
 }
