@@ -6,10 +6,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
-/**
- * Created by Petar Stanev on 10/12/2017.
- */
-
 public abstract class Question {
     public static final int WRONG_ANSWERS_COUNT = 3;
     public static final int MAX_RESULT_NUMBER = 50;
@@ -22,7 +18,6 @@ public abstract class Question {
     private boolean answered;
     private int errorNumber;
     private int correctResult;
-    private int difficulty;
 
 
     public Question() {
@@ -32,26 +27,10 @@ public abstract class Question {
         generateAnswers();
         answered = false;
         errorNumber = 0;
-        difficulty = 1;
     }
-
-    public Question(int difficulty) {
-        answers = new ArrayList<>();
-        randomGenerator = new Random();
-        generateQuestion();
-        generateAnswers();
-        answered = false;
-        errorNumber = 0;
-        this.difficulty = difficulty;
-    }
-
 
     public ArrayList<Answer> getAnswers() {
         return answers;
-    }
-
-    public void setAnswers(ArrayList<Answer> answers) {
-        this.answers = answers;
     }
 
     private void generateAnswers(){
@@ -61,27 +40,6 @@ public abstract class Question {
     }
 
     public abstract void generateQuestion();
-
-/*    private void generateSymbol(){
-        switch (randomGenerator.nextInt(difficulty)) {
-            case 0:
-                generateUniqueNumbersForAddition();
-                symbol = '+';
-                break;
-            case 1:
-                generateUniqueNumbersForSubtraction();
-                symbol = '-';
-                break;
-            case 2:
-                generateUniqueNumbersForMultiplication();
-                symbol = '*';
-                break;
-            case 3:
-                generateUniqueNumbersForDivision();
-                symbol = '/';
-                break;
-        }
-    }*/
 
     protected void generateUniqueNumbersForAddition(){
         numberOne = randomGenerator.nextInt(50);
@@ -100,8 +58,8 @@ public abstract class Question {
     }
 
     protected void generateUniqueNumbersForDivision(){
-        int save = 	 randomGenerator.nextInt(MAX_RESULT_NUMBER)+1;
-        numberTwo = randomGenerator.nextInt(MAX_RESULT_NUMBER)+1;
+        int save = 	 randomGenerator.nextInt(10)+1;
+        numberTwo = randomGenerator.nextInt(10)+1;
         numberOne= save * numberTwo;
     }
 
