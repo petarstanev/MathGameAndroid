@@ -1,8 +1,6 @@
 package com.example.petarstanev.mathgame;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.util.Log;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,21 +11,10 @@ public class HighScoreTable {
     private List<Score> scores;
     private Context context;
 
-
-
-
     public HighScoreTable(Context context) {
         scores = new ArrayList<Score>();
         retrieveScores();
         this.context = context;
-    }
-
-    public void saveScores(){
-        try {
-            InternalStorage.writeObject(context, "highScore", scores);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public boolean checkHighScore(Score testScore){

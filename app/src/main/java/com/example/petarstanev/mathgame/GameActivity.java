@@ -43,7 +43,7 @@ public class GameActivity extends AppCompatActivity {
     HighScoreTable highScoreTable;
     TactileFeedback tactileFeedback;
 
-    SensorEventListener listener = new SensorEventListener() {
+    public SensorEventListener listener = new SensorEventListener() {
         @Override
         public void onSensorChanged(SensorEvent event) {
             if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {

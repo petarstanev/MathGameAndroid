@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 
 import java.io.Serializable;
 
-public class Score implements Comparable, Serializable {
+public class Score implements Comparable {
     private int points;
     private String name;
 

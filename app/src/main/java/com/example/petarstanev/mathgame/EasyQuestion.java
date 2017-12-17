@@ -8,8 +8,6 @@ public class EasyQuestion extends Question{
         symbol = '+';
     }
 
-
-
     protected void generateUniqueNumbersForAddition(){
         numberOne = randomGenerator.nextInt(MAX_RESULT_NUMBER);
         numberTwo = randomGenerator.nextInt(MAX_RESULT_NUMBER);

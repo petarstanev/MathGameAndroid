@@ -35,10 +35,10 @@ public class Game {
     }
 
     public int getDifficulty(){
-        if (score <3)
+        if (score <10)
             return 0;
 
-        if (score <8)
+        if (score <20)
             return 1;
 
         return 2;

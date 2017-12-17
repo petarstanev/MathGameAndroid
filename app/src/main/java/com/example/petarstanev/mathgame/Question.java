@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.Random;
 
 public abstract class Question {
-    public static final int WRONG_ANSWERS_COUNT = 3;
     public static final int MAX_RESULT_NUMBER = 50;
 
     private ArrayList<Answer> answers;
@@ -129,7 +128,6 @@ public abstract class Question {
     public void increaseErrorNumber() {
         errorNumber++;
     }
-
 
     public String printQuestion(boolean includeAnswer){
         if (includeAnswer)
