@@ -10,7 +10,7 @@ public class Game {
     private QuestionFactory questionFactory;
 
     public Game() {
-        lives = 2;
+        lives = 3;
         score = 0;
         questionFactory = new QuestionFactory();
         question = questionFactory.generateQuestion(getDifficulty());
